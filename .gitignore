@@ -1,0 +1,16 @@
+target
+*.class
+*.iml
+*.ipr
+logger
+.idea
+!.idea/workspace.xml
+
+# File-based project format:
+*.iws
+
+# mpeltonen/sbt-idea plugin
+.idea_modules/
+
+# IntelliJ
+/out/
