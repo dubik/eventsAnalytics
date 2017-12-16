@@ -1,14 +1,10 @@
-package verto
+package org.dubik.analytics
 
 import org.dubik.analytics.Analytics.Session
-import org.dubik.analytics.{Analytics, Event}
 
 import scala.io.Source
 
 object Main {
-  private def loadEventsList(): List[Event] =
-    Source.fromResource("events.json").getLines().map(Event.fromString).toList
-
   def main(args: Array[String]): Unit = {
     val events = loadEventsList()
     val (session, weight) = findSessionWithHighestWeight(events)
@@ -18,6 +14,22 @@ object Main {
     session.foreach(s => println(s.map(_.category).mkString(" - ")))
   }
 
+  private def loadEventsList(): List[Event] =
+    Source.fromResource("events.json").getLines().map(Event.fromString).toList
+
+  /**
+    * Finds session/subsessions and it's weight. Session is a tree not a list,
+    * so function returns all possible sessions for specific event. If session
+    * represented by following tree:
+    * Science -> Kittens -> Kittens
+    *         \
+    *          -> Politics -> Fashion
+    * Returned list would be like following:
+    * List( List(Science, Kittens, Kittens), List(Science, Politics, Fashion))
+    *
+    * @param events list of events which needs to be processed, shouldn't contain unknown parent ids
+    * @return a pair of list of sessions and it's weight
+    */
   private def findSessionWithHighestWeight(events: List[Event]): (List[Session], Int) = {
     val childrenMap = Analytics.makeChildrenMap(events)
     val analytics = Analytics(childrenMap)
