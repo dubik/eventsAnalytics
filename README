@@ -1,10 +1,10 @@
-#Requirements
+# Requirements
 
-- sbt
-- scala
+* sbt
+* scala
 
-#Run
+# Run
 
-To compile launch sbt console with ```sbt```command.
-```run``` to run application with ```events.json```.
-To launch tests type ```test``` in sbt console.
+To compile launch sbt console with `sbt` command.
+`run` to run application with `events.json`.
+To launch tests type `test` in sbt console.
