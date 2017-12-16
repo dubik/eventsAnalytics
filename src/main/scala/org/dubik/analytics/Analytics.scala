@@ -3,6 +3,17 @@ package org.dubik.analytics
 import org.dubik.analytics.Analytics.Session
 
 case class Analytics(childrenMap: Map[Option[Long], List[Event]]) {
+  /**
+    * Returns list of sessions for specified event. If session
+    * represented by following tree:
+    * Science -> Kittens -> Kittens
+    *         \
+    *          -> Politics -> Fashion
+    * Returned list would be like following:
+    * List( List(Science, Kittens, Kittens), List(Science, Politics, Fashion))
+    * @param event specific event for which all sessions needs to be find
+    * @return list of sessions
+    */
   def findSessionsForEvent(event: Event): List[Session] = {
     def findSessionsRec(event: Event, currentSession: Session, sessions: List[Session]): List[Session] = {
       val parentId = Some(event.articleId)
